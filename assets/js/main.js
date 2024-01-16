@@ -9,8 +9,17 @@ const fetchGitHubUser = async (username) => {
 const getGithubUserData = async (username) => {
   const userData = await fetchGitHubUser(username);
   renderUserDataIntoDom(
-    ({ avatar_url, name, bio, company, location, created_at, followers, following, public_repos } =
-      userData)
+    ({
+      avatar_url,
+      name,
+      bio,
+      company,
+      location: userLocation,
+      created_at,
+      followers,
+      following,
+      public_repos,
+    } = userData)
   );
 };
 
@@ -31,9 +40,9 @@ const renderUserDataIntoDom = () => {
   corp.textContent = `${company}`;
   document.body.appendChild(corp);
 
-  const livesIn = document.createElement("p");
-  livesIn.textContent = `${location}`;
-  document.body.appendChild(livesIn);
+  const liveIn = document.createElement("p");
+  liveIn.textContent = `${userLocation}`;
+  document.body.appendChild(liveIn);
 
   const onGitHubSince = document.createElement("p");
   onGitHubSince.textContent = `${created_at}`;
