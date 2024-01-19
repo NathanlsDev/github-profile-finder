@@ -1,13 +1,24 @@
-const searchBar = document.querySelector("#searchBar");
-const button = document.querySelector("#button");
+const form = document.querySelector("form");
 
-const fetchGitHubUser = async (username) => {
-  const response = await fetch(`https://api.github.com/users/${username}`);
-  return response.json();
+const paths = (username) => {
+  const endPoint = `https://api.github.com/users/${username}`;
+  getGithubUserData(endPoint);
 };
 
-const getGithubUserData = async (username) => {
-  const userData = await fetchGitHubUser(username);
+const fetchGitHubUser = async (endPoint) => {
+  try {
+    const response = await fetch(endPoint);
+    if (!response.ok) {
+      throw new Error(`can't find your user profile`);
+    }
+    return response.json();
+  } catch ({ name, message }) {
+    console.log(`${name}: ${message}`);
+  }
+};
+
+const getGithubUserData = async (endPoint) => {
+  const userData = await fetchGitHubUser(endPoint);
   renderUserDataIntoDom(
     ({
       avatar_url,
@@ -19,6 +30,7 @@ const getGithubUserData = async (username) => {
       followers,
       following,
       public_repos,
+      html_url,
     } = userData)
   );
 };
@@ -59,8 +71,20 @@ const renderUserDataIntoDom = () => {
   const publicRepos = document.createElement("p");
   publicRepos.textContent = `${public_repos}`;
   document.body.appendChild(publicRepos);
+
+  const seeProfile = document.createElement("a");
+  seeProfile.setAttribute("href", html_url);
+  seeProfile.setAttribute("target", "_blank");
+  seeProfile.textContent = `${"Ver Perfil"}`;
+  document.body.appendChild(seeProfile);
 };
 
-button.addEventListener("click", () => {
-  getGithubUserData(searchBar.value);
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const username = form.searchBar.value;
+  paths(username);
+  
+  form.reset();
+  form.searchBar.focus();
 });
