@@ -40,13 +40,17 @@ const renderUserDataIntoDom = () => {
   avatarProfile.setAttribute("src", avatar_url);
   document.body.appendChild(avatarProfile);
 
-  const username = document.createElement("h3");
+  const username = document.createElement("h1");
   username.textContent = `${name}`;
   document.body.appendChild(username);
 
   const biography = document.createElement("p");
   biography.textContent = `${bio}`;
   document.body.appendChild(biography);
+  
+  const onGitHubSince = document.createElement("p");
+  onGitHubSince.textContent = `${created_at}`;
+  document.body.appendChild(onGitHubSince); //formatar data
 
   const corp = document.createElement("p");
   corp.textContent = `${company}`;
@@ -55,10 +59,6 @@ const renderUserDataIntoDom = () => {
   const liveIn = document.createElement("p");
   liveIn.textContent = `${userLocation}`;
   document.body.appendChild(liveIn);
-
-  const onGitHubSince = document.createElement("p");
-  onGitHubSince.textContent = `${created_at}`;
-  document.body.appendChild(onGitHubSince); //formatar data
 
   const userFollowing = document.createElement("p");
   userFollowing.textContent = `${following}`;
@@ -86,5 +86,5 @@ form.addEventListener("submit", (e) => {
   paths(username);
   
   form.reset();
-  form.searchBar.focus();
+  form.searchBar.focus(); 
 });
