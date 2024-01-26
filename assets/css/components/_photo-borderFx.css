@@ -1,0 +1,30 @@
+.user-photo-container {
+  position: relative;
+}
+
+.user-photo-container:before {
+  content: "";
+  background: linear-gradient(45deg, #00ddeb, #5b42f3, #af40ff);
+  position: absolute;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  -webkit-filter: blur(10px);
+  width: 100%;
+  height: 100%;
+  animation: glowing-user-photo-container 20s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 50% 0;
+}
+
+@keyframes glowing-user-photo-container {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}

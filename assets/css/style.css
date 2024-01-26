@@ -1,3 +1,7 @@
+@import url(components/_photo-borderFx.css);
+@import url(components/_profile-link.css);
+@import url(components/_btn-submit.css);
+
 * {
   border: none;
   box-sizing: border-box;
@@ -9,8 +13,11 @@
 }
 
 :root {
-  --ibm-plex: "IBM Plex Mono", monospace, sans-serif;
   --roboto-mono: "Roboto Mono", monospace, sans-serif;
+  --audiowide: "Audiowide", sans-serif;
+  --cinzel: "Cinzel", serif;
+  --gruppo: "Gruppo", sans-serif;
+
   --text-color: #fff;
   --bg-color: #0d1117;
   --alt-color: #161b22;
@@ -27,9 +34,8 @@ body {
 }
 
 main {
-  border: 1px solid cyan;
   padding: 1rem 1rem 0 1rem;
-  min-height: 90vh;
+  /* min-height: 90vh; */
 }
 /* .initial-state{
   display: grid;
@@ -40,99 +46,183 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  font-family: var(--ibm-plex);
+  gap: 2rem;
   ::-webkit-scrollbar {
     display: none;
   }
+
   h1 {
+    font-family: var(--cinzel);
+    font-size: 3rem;
   }
+
   p {
-    padding: 1rem;
+    font-family: var(--gruppo);
+    font-size: 1.4rem;
+    padding: 0 1rem;
     border: 2px solid var(--border-color);
-    border-radius: .25rem;
+    background-color: var(--alt-color);
+    border-radius: 0.25rem;
     max-width: 80%;
-    max-height: 100px;
+    max-height: 6.25rem;
     overflow: scroll;
   }
 }
+
 .user-photo-container {
   width: 16vw;
+
   img {
     width: 100%;
+    border-radius: 50% 0;
     object-fit: cover;
-    border: 2px solid rgb(238, 234, 19);
   }
 }
-
-
-
 
 .user-stats {
+  font-size: 1.4rem;
   margin-top: 2rem;
-  border: 1px solid cyan;
+  border: 2px solid var(--border-color);
+  border-radius: 0.25rem;
+  padding: 1rem;
+  gap: 2rem;
   display: flex;
   flex-direction: column;
+
   h2 {
-    border: 1px solid red;
-    
+    width: fit-content;
+    padding: 0.5rem;
+    border-radius: 0.8rem;
+    font-size: 1rem;
+    background-color: var(--alt-color);
+
+    time {
+      font-family: var(--audiowide);
+      font-size: 0.8rem;
+    }
+  }
+
+  a {
+    text-align: center;
   }
 }
+
 .user-work-location {
-  border: 1px solid greenyellow;
+  display: flex;
+  justify-content: space-between;
 }
+
 .user-metrics {
-  border: 1px solid royalblue;
+  display: flex;
+  justify-content: space-between;
+
+  ul {
+    width: 15%;
+    display: flex;
+    justify-content: space-between;
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .user-searchBar {
+  margin: 4rem 0;
+  height: 4rem;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  input {
+    font-size: 1.4rem;
+    height: 100%;
+  }
+
+  .bar {
+    background-color: var(--alt-color);
+    color: var(--text-color);
+    border-radius: 0.25rem 0 0 0.25rem;
+    width: 50%;
+    padding-left: 1rem;
+  }
+
+  .btn-submit {
+    width: 20%;
+    border-radius: 0 0.25rem 0.25rem 0;
+  }
 }
+
 .users-history {
+  border: 2px solid var(--border-color);
+  border-radius: 0.25rem;
   display: flex;
-  flex-flow: column wrap;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
   ul {
     background-color: var(--alt-color);
     display: flex;
+    overflow: scroll;
+    border-radius: 0.25rem;
+    max-width: 100%;
+    gap: 2rem;
+    padding: 1rem;
+
+    li {
+      border: 2px solid var(--border-color);
+      border-radius: 0.25rem;
+      gap: 1rem;
+      padding: 1rem;
+      display: flex;
+      min-width: 20%;
+      justify-content: space-around;
+      align-items: center;
+      flex-direction: column;
+
+      ::-webkit-scrollbar {
+        display: none;
+      }
+
+      figure {
+        width: 8vw;
+        object-fit: cover;
+
+        img {
+          width: 100%;
+          border-radius: 50%;
+        }
+      }
+
+      p {
+        height: 50px;
+        overflow: scroll;
+        border: 2px solid var(--border-color);
+        border-radius: 0.25rem;
+      }
+
+      a {
+        margin-top: 2rem;
+      }
+    }
   }
 }
 
 footer {
+  border-top: 2px solid;
+  margin-top: 8rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid;
   height: 10vh;
+
+  a {
+    color: var(--text-color);
+  }
 }
 
-img {
-  width: 60px;
-  border-radius: 50% 0;
-  object-fit: cover;
-}
-
-/* .user-presentation {
-
-} */
-/* @media screen and (min-width: 768px) {
+@media screen and (min-width: 768px) {
   .users-history {
     ::-webkit-scrollbar {
       width: 0;
@@ -149,4 +239,4 @@ img {
       height: 1px;
     }
   }
-} */
+}
