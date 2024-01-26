@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>GitHub Profile Finder</title>
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -14,10 +13,10 @@
     />
   </head>
   <body>
-    <main>
+    <main class="initial-state">
       <section class="user-presentation">
         <figure class="user-photo-container">
-          <img
+          <img 
             src="https://avatars.githubusercontent.com/u/97316787?v=4"
             alt="user profile photo"
           />
@@ -37,26 +36,26 @@
         </p>
       </section>
 
-      <section class="user-createdIn">
+      <section class="user-stats">
         <h2>since: <time>11/22/33</time></h2>
+        
+        <div class="user-work-location">
+          <p>🏢 My room</p>
+          <address>
+            <p>🚩 São Paulo - SP</p>
+          </address>
+        </div>
+
+        <div class="user-metrics">
+          <ul>
+            <li>⬆️ 123</li>
+            <li>⬇️ 45</li>
+          </ul>
+          <p>🔖 25</p>
+        </div>
+
+        <a class="user-profile-link" href="#">See Profile</a>
       </section>
-
-      <div class="user-work-location">
-        <p>🏢 My room</p>
-        <address>
-          <p>🚩 São Paulo - SP</p>
-        </address>
-      </div>
-
-      <div class="user-stats">
-        <ul>
-          <li>⬆️ 123</li>
-          <li>⬇️ 45</li>
-        </ul>
-        <p>🔖 25</p>
-      </div>
-
-      <a class="user-profile-link" href="#">See Profile</a>
 
       <form class="user-searchBar" action="#">
         <input
@@ -146,5 +145,6 @@
       <p>Developed by: <a href="#" target="#">Nathan Lima</a></p>
     </footer>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/test.js"></script>
   </body>
 </html>

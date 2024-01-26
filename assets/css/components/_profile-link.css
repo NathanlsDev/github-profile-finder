@@ -13,12 +13,7 @@
 
 .user-profile-link:before {
   content: "";
-  background: linear-gradient(
-    45deg,
-    #00ddeb,
-    #5b42f3,
-    #af40ff
-  );
+  background: linear-gradient(45deg, #00ddeb, #5b42f3, #af40ff);
   position: absolute;
   top: -2px;
   left: -2px;
