@@ -17,12 +17,13 @@
       <section class="user-presentation">
         <figure class="user-photo-container">
           <img
+            data-js="user-photo"
             src="https://avatars.githubusercontent.com/u/97316787?v=4"
             alt="user profile photo"
           />
         </figure>
-        <h1>Nathan Lima</h1>
-        <p>
+        <h1 data-js="username">Nathan Lima</h1>
+        <p data-js="biography">
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Blanditiis
           autem vitae amet sequi magni quo odit? Velit iste quidem nemo dolorem
           ratione sunt voluptatibus recusandae, aspernatur iure laboriosam
@@ -37,24 +38,26 @@
       </section>
 
       <section class="user-stats">
-        <h2>since: <time>11/22/33</time></h2>
+        <h2>since: <time data-js="onGitHubSince">11/22/33</time></h2>
 
         <div class="user-work-location">
-          <p>🏢 My room</p>
+          <p data-js="company">🏢 My room</p>
           <address>
-            <p>🚩 São Paulo - SP</p>
+            <p data-js="location">🚩 São Paulo - SP</p>
           </address>
         </div>
 
         <div class="user-metrics">
           <ul>
-            <li>⬆️ 123</li>
-            <li>⬇️ 45</li>
+            <li data-js="userFollowing">⬆️ 123</li>
+            <li data-js="userFollowers">⬇️ 45</li>
           </ul>
-          <p>🔖 25</p>
+          <p data-js="publicRepos">🔖 25</p>
         </div>
 
-        <a class="user-profile-link" href="#">See Profile</a>
+        <a class="user-profile-link" data-js="profileLink" href="#"
+          >See Profile</a
+        >
       </section>
 
       <form class="user-searchBar" action="#">
@@ -71,7 +74,7 @@
 
       <section class="users-history">
         <h3>Past research's 🔙</h3>
-        <ul class="history-list">
+        <ul class="history-list" data-js="research-history">
           <li tabindex="0">
             <figure>
               <img

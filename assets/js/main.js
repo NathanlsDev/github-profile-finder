@@ -1,4 +1,8 @@
+const historySection = document.querySelector('[data-js="research-history"]');
 const form = document.querySelector("form");
+
+const pastResearchProfiles = [];
+const userData = [];
 
 const paths = (username) => {
   const endPoint = `https://api.github.com/users/${username}`;
@@ -21,6 +25,7 @@ const getGithubUserData = async (endPoint) => {
   const userData = await fetchGitHubUser(endPoint);
   renderUserDataIntoDom(
     ({
+      id,
       avatar_url,
       name,
       bio,
@@ -36,47 +41,113 @@ const getGithubUserData = async (endPoint) => {
 };
 
 const renderUserDataIntoDom = () => {
-  const avatarProfile = document.createElement("img");
-  avatarProfile.setAttribute("src", avatar_url);
-  document.body.appendChild(avatarProfile);
+  const userPhoto = document.querySelector('[data-js="user-photo"]');
+  const title = document.querySelector('[data-js="username"]');
+  const biography = document.querySelector('[data-js="biography"]');
+  const onGitHubSince = document.querySelector('[data-js="onGitHubSince"]');
+  const corp = document.querySelector('[data-js="company"]');
+  const livesIn = document.querySelector('[data-js="location"]');
+  const userFollowing = document.querySelector('[data-js="userFollowing"]');
+  const userFollowers = document.querySelector('[data-js="userFollowers"]');
+  const publicRepos = document.querySelector('[data-js="publicRepos"]');
+  const seeProfile = document.querySelector('[data-js="profileLink"]');
 
-  const username = document.createElement("h1");
-  username.textContent = `${name}`;
-  document.body.appendChild(username);
+  userPhoto.setAttribute("src", avatar_url);
+  userPhoto.setAttribute("alt", `${name} profile photo`);
 
-  const biography = document.createElement("p");
+  title.textContent = `${name}`;
   biography.textContent = `${bio}`;
-  document.body.appendChild(biography);
-  
-  const onGitHubSince = document.createElement("p");
-  onGitHubSince.textContent = `${created_at}`;
-  document.body.appendChild(onGitHubSince); //formatar data
-
-  const corp = document.createElement("p");
+  onGitHubSince.textContent = formatDate(created_at);
   corp.textContent = `${company}`;
-  document.body.appendChild(corp);
-
-  const liveIn = document.createElement("p");
-  liveIn.textContent = `${userLocation}`;
-  document.body.appendChild(liveIn);
-
-  const userFollowing = document.createElement("p");
+  livesIn.textContent = `${userLocation}`;
   userFollowing.textContent = `${following}`;
-  document.body.appendChild(userFollowing);
-
-  const userFollowers = document.createElement("p");
   userFollowers.textContent = `${followers}`;
-  document.body.appendChild(userFollowers);
-
-  const publicRepos = document.createElement("p");
   publicRepos.textContent = `${public_repos}`;
-  document.body.appendChild(publicRepos);
 
-  const seeProfile = document.createElement("a");
   seeProfile.setAttribute("href", html_url);
   seeProfile.setAttribute("target", "_blank");
-  seeProfile.textContent = `${"Ver Perfil"}`;
-  document.body.appendChild(seeProfile);
+  seeProfile.textContent = `${"See Profile"}`;
+
+  safeHistory();
+};
+
+const safeHistory = () => {
+  const userData = {
+    id,
+    avatar_url,
+    name,
+    bio,
+    company,
+    location: userLocation,
+    created_at,
+    followers,
+    following,
+    public_repos,
+    html_url,
+  };
+
+  const idAlreadyExists = pastResearchProfiles.some(
+    (researchedUser) => researchedUser.id === userData.id
+  );
+
+  const item = document.createElement("li");
+  const imgContainer = document.createElement("figure");
+  const image = document.createElement("img");
+  const title = document.createElement("h4");
+  const paragraph = document.createElement("p");
+  const link = document.createElement("a");
+
+  if (pastResearchProfiles.length <= 5 && !idAlreadyExists) {
+    pastResearchProfiles.unshift(userData);
+    item.appendChild(imgContainer);
+    item.setAttribute("tabindex", "0");
+    imgContainer.appendChild(image);
+    image.setAttribute("src", avatar_url);
+    item.appendChild(title);
+    title.textContent = name;
+    item.appendChild(paragraph);
+    paragraph.textContent = bio;
+    item.appendChild(link);
+    link.classList.add("secondary-btn");
+    link.setAttribute("href", html_url);
+    link.setAttribute("target", "_blank");
+    link.textContent = `See Profile`;
+    historySection.prepend(item);
+
+    dataHolder(userData);
+  }
+
+  if (pastResearchProfiles.length === 6) {
+    pastResearchProfiles.pop();
+  }
+
+  if (historySection.children.length === 6) {
+    historySection.removeChild(historySection.lastElementChild);
+  }
+};
+
+const dataHolder = (data) => {
+  const userData = JSON.parse(localStorage.getItem("userData")) || [];
+
+  if (userData.length < 5) {
+    userData.unshift(data);
+  } else {
+    userData.pop();
+    userData.unshift(data);
+  }
+
+  localStorage.setItem("userData", JSON.stringify(userData));
+  // localStorage.clear()
+};
+
+const formatDate = (date) => {
+  const createdAt = new Date(date);
+
+  const day = String(createdAt.getDate()).padStart(2, "0");
+  const month = String(createdAt.getMonth() + 1).padStart(2, "0");
+  const year = createdAt.getFullYear();
+
+  return `${day}/${month}/${year}`;
 };
 
 form.addEventListener("submit", (e) => {
@@ -84,7 +155,7 @@ form.addEventListener("submit", (e) => {
 
   const username = form.searchBar.value;
   paths(username);
-  
+
   form.reset();
-  form.searchBar.focus(); 
+  form.searchBar.focus();
 });
