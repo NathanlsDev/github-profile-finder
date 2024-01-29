@@ -111,7 +111,7 @@ const safeHistory = () => {
     link.classList.add("secondary-btn");
     link.setAttribute("href", html_url);
     link.setAttribute("target", "_blank");
-    link.textContent = `See Profile`;
+    link.textContent = `Profile`;
     historySection.prepend(item);
 
     dataHolder(userData);

@@ -177,7 +177,8 @@ main {
     gap: 1rem;
     padding: 1rem;
     display: flex;
-    width: 18.75rem;
+    max-width: 18.75rem;
+    min-width: 12.37rem;
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
