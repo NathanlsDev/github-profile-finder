@@ -159,4 +159,9 @@ form.addEventListener("submit", (e) => {
 
   form.reset();
   form.searchBar.focus();
+  backToTop()
 });
+
+const backToTop = () => {
+  scrollTo(0,0)
+}
