@@ -1,6 +1,17 @@
 const historySection = document.querySelector('[data-js="research-history"]');
 const form = document.querySelector("form");
 
+const userPhoto = document.querySelector('[data-js="user-photo"]');
+const title = document.querySelector('[data-js="username"]');
+const biography = document.querySelector('[data-js="biography"]');
+const onGitHubSince = document.querySelector('[data-js="onGitHubSince"]');
+const corp = document.querySelector('[data-js="company"]');
+const livesIn = document.querySelector('[data-js="location"]');
+const userFollowing = document.querySelector('[data-js="userFollowing"]');
+const userFollowers = document.querySelector('[data-js="userFollowers"]');
+const publicRepos = document.querySelector('[data-js="publicRepos"]');
+const seeProfile = document.querySelector('[data-js="profileLink"]');
+
 const pastResearchProfiles = [];
 const userData = [];
 
@@ -41,16 +52,6 @@ const getGithubUserData = async (endPoint) => {
 };
 
 const renderUserDataIntoDom = () => {
-  const userPhoto = document.querySelector('[data-js="user-photo"]');
-  const title = document.querySelector('[data-js="username"]');
-  const biography = document.querySelector('[data-js="biography"]');
-  const onGitHubSince = document.querySelector('[data-js="onGitHubSince"]');
-  const corp = document.querySelector('[data-js="company"]');
-  const livesIn = document.querySelector('[data-js="location"]');
-  const userFollowing = document.querySelector('[data-js="userFollowing"]');
-  const userFollowers = document.querySelector('[data-js="userFollowers"]');
-  const publicRepos = document.querySelector('[data-js="publicRepos"]');
-  const seeProfile = document.querySelector('[data-js="profileLink"]');
 
   userPhoto.setAttribute("src", avatar_url);
   userPhoto.setAttribute("alt", `${name} profile photo`);
