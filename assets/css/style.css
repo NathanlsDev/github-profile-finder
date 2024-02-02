@@ -1,6 +1,7 @@
 @import url(components/_photo-borderFx.css);
 @import url(components/_profile-link.css);
 @import url(components/_btn-submit.css);
+@import url(components/top-button.css);
 
 * {
   border: none;

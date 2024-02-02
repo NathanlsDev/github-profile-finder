@@ -1,0 +1,26 @@
+.btnTop{
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 500;
+}
+
+.top-button_style{
+  background: var(--white-t1);
+  border-radius: 50%;
+  width: 45px;
+  padding: .5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.top-button_style > img{
+  width: 30px;
+}
+
+.top-button_style:active{
+  transform: scale(.8);
+}
