@@ -24,3 +24,6 @@
 .top-button_style:active{
   transform: scale(.8);
 }
+.top-button_style:hover{
+  filter: brightness(2);
+}
