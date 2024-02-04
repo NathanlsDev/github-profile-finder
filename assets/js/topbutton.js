@@ -5,7 +5,8 @@ returnBtn.addEventListener("click", () => {
 });
 
 document.addEventListener("scroll", () => {
-  return window.scrollY > 200
-    ? (Btn.style.display = "flex")
-    : (Btn.style.display = "none");
+  if (window.scrollY > 200) {
+    return (Btn.style.display = "flex");
+  }
+  return (Btn.style.display = "none");
 });
