@@ -52,7 +52,6 @@ const getGithubUserData = async (endPoint) => {
 };
 
 const renderUserDataIntoDom = () => {
-
   userPhoto.setAttribute("src", avatar_url);
   userPhoto.setAttribute("alt", `${name} profile photo`);
 
@@ -143,12 +142,15 @@ const dataHolder = (data) => {
 
 const formatDate = (date) => {
   const createdAt = new Date(date);
+  return createdAt.toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+};
 
-  const day = String(createdAt.getDate()).padStart(2, "0");
-  const month = String(createdAt.getMonth() + 1).padStart(2, "0");
-  const year = createdAt.getFullYear();
-
-  return `${day}/${month}/${year}`;
+const backToTop = () => {
+  scrollTo(0, 0);
 };
 
 form.addEventListener("submit", (e) => {
@@ -157,11 +159,7 @@ form.addEventListener("submit", (e) => {
   const username = form.searchBar.value;
   paths(username);
 
+  backToTop();
   form.reset();
   form.searchBar.focus();
-  backToTop()
 });
-
-const backToTop = () => {
-  scrollTo(0,0)
-}
