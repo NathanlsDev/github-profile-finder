@@ -1,4 +1,4 @@
-.btnTop{
+.btnTop {
   display: none;
   justify-content: center;
   align-items: center;
@@ -8,22 +8,22 @@
   z-index: 500;
 }
 
-.top-button_style{
+.top-button_style {
   background: var(--white-t1);
   border-radius: 50%;
   width: 45px;
-  padding: .5rem;
+  padding: 0.5rem;
   font-size: 1.5rem;
   cursor: pointer;
 }
 
-.top-button_style > img{
+.top-button_style > img {
   width: 30px;
 }
 
-.top-button_style:active{
-  transform: scale(.8);
+.top-button_style:active {
+  transform: scale(0.8);
 }
-.top-button_style:hover{
+.top-button_style:hover {
   filter: brightness(2);
 }

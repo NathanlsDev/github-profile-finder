@@ -99,10 +99,12 @@ const safeHistory = () => {
 
   if (pastResearchProfiles.length <= 5 && !idAlreadyExists) {
     pastResearchProfiles.unshift(userData);
+    item.id = id;
     item.appendChild(imgContainer);
     item.setAttribute("tabindex", "0");
     imgContainer.appendChild(image);
     image.setAttribute("src", avatar_url);
+    image.setAttribute("alt", `${name} profile photo.`);
     item.appendChild(title);
     title.textContent = name;
     item.appendChild(paragraph);
@@ -126,6 +128,39 @@ const safeHistory = () => {
   }
 };
 
+historySection.addEventListener("click", ({ target }) => {
+  let elementId = null;
+
+  if (target.nodeName === "LI") {
+    elementId = target.id;
+  }
+
+  if (target.nodeName === "IMG") {
+    elementId = target.parentNode.parentNode.id;
+  }
+
+  const storageData = localStorage.getItem("userData");
+  const parsedData = JSON.parse(storageData);
+  const clickedUser = parsedData.find((obj) => obj.id === Number(elementId));
+
+  userPhoto.setAttribute("src", clickedUser.avatar_url);
+  userPhoto.setAttribute("alt", `${clickedUser.name} profile photo`);
+
+  title.textContent = `${clickedUser.name}`;
+  biography.textContent = `${clickedUser.bio}`;
+  onGitHubSince.textContent = formatDate(clickedUser.created_at);
+  corp.textContent = `${clickedUser.company}`;
+  livesIn.textContent = `${clickedUser.location}`;
+  userFollowing.textContent = `${clickedUser.following}`;
+  userFollowers.textContent = `${clickedUser.followers}`;
+  publicRepos.textContent = `${clickedUser.public_repos}`;
+
+  seeProfile.setAttribute("href", clickedUser.html_url);
+  seeProfile.setAttribute("target", "_blank");
+  seeProfile.textContent = `${"See Profile"}`;
+  backToTop();
+});
+
 const dataHolder = (data) => {
   const userData = JSON.parse(localStorage.getItem("userData")) || [];
 
@@ -137,7 +172,6 @@ const dataHolder = (data) => {
   }
 
   localStorage.setItem("userData", JSON.stringify(userData));
-  // localStorage.clear()
 };
 
 const formatDate = (date) => {
@@ -147,10 +181,6 @@ const formatDate = (date) => {
     month: "2-digit",
     year: "numeric",
   });
-};
-
-const backToTop = () => {
-  scrollTo(0, 0);
 };
 
 form.addEventListener("submit", (e) => {
@@ -163,3 +193,7 @@ form.addEventListener("submit", (e) => {
   form.reset();
   form.searchBar.focus();
 });
+
+const backToTop = () => {
+  scrollTo(0, 0);
+};
