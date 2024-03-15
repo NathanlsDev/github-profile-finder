@@ -36,12 +36,13 @@ body {
 
 main {
   padding: 1rem 1rem 0 1rem;
-  /* min-height: 90vh; */
 }
-/* .initial-state{
+
+.initial-state{
   display: grid;
-  grid-template-rows: 3fr 2fr 1fr 3fr;
-} */
+  align-items: center;
+  grid-template-rows: calc(100vh - (14vh + 80px));
+}
 
 .user-presentation {
   display: flex;
@@ -203,6 +204,7 @@ main {
       overflow: scroll;
       border: 2px solid var(--border-color);
       border-radius: 0.25rem;
+      max-width: 200px;
     }
 
     a {
@@ -356,4 +358,8 @@ footer {
       }
     }
   }
+}
+
+.disabled{
+  display: none;
 }

@@ -1,6 +1,5 @@
 const historySection = document.querySelector('[data-js="research-history"]');
 const form = document.querySelector("form");
-
 const userPhoto = document.querySelector('[data-js="user-photo"]');
 const title = document.querySelector('[data-js="username"]');
 const biography = document.querySelector('[data-js="biography"]');
@@ -55,20 +54,22 @@ const renderUserDataIntoDom = () => {
   userPhoto.setAttribute("src", avatar_url);
   userPhoto.setAttribute("alt", `${name} profile photo`);
 
-  title.textContent = `${name}`;
-  biography.textContent = `${bio}`;
+  title.textContent = `${name !== "null" ? name : "Uninformed"}`;
+  biography.textContent = `${bio || `Uninformed`}`;
   onGitHubSince.textContent = formatDate(created_at);
-  corp.textContent = `${company}`;
-  livesIn.textContent = `${userLocation}`;
-  userFollowing.textContent = `${following}`;
-  userFollowers.textContent = `${followers}`;
-  publicRepos.textContent = `${public_repos}`;
+  corp.textContent = `${company || `Uninformed`}`;
+
+  livesIn.textContent = `${userLocation || `Uninformed`}`;
+  userFollowing.textContent = `Following: ${formatValue(following) || "0"}`;
+  userFollowers.textContent = `Followers: ${formatValue(followers) || "0"}`;
+  publicRepos.textContent = `Public Repos: ${public_repos || "0"}`;
 
   seeProfile.setAttribute("href", html_url);
   seeProfile.setAttribute("target", "_blank");
   seeProfile.textContent = `${"See Profile"}`;
 
   safeHistory();
+  stylesHandler();
 };
 
 const safeHistory = () => {
@@ -90,32 +91,9 @@ const safeHistory = () => {
     (researchedUser) => researchedUser.id === userData.id
   );
 
-  const item = document.createElement("li");
-  const imgContainer = document.createElement("figure");
-  const image = document.createElement("img");
-  const title = document.createElement("h4");
-  const paragraph = document.createElement("p");
-  const link = document.createElement("a");
-
   if (pastResearchProfiles.length <= 5 && !idAlreadyExists) {
     pastResearchProfiles.unshift(userData);
-    item.id = id;
-    item.appendChild(imgContainer);
-    item.setAttribute("tabindex", "0");
-    imgContainer.appendChild(image);
-    image.setAttribute("src", avatar_url);
-    image.setAttribute("alt", `${name} profile photo.`);
-    item.appendChild(title);
-    title.textContent = name;
-    item.appendChild(paragraph);
-    paragraph.textContent = bio;
-    item.appendChild(link);
-    link.classList.add("secondary-btn");
-    link.setAttribute("href", html_url);
-    link.setAttribute("target", "_blank");
-    link.textContent = `Profile`;
-    historySection.prepend(item);
-
+    historySection.prepend(createdItem());
     dataHolder(userData);
   }
 
@@ -126,6 +104,35 @@ const safeHistory = () => {
   if (historySection.children.length === 6) {
     historySection.removeChild(historySection.lastElementChild);
   }
+};
+
+createdItem = () => {
+  const item = document.createElement("li");
+  const imgContainer = document.createElement("figure");
+  const image = document.createElement("img");
+  const title = document.createElement("h4");
+  const paragraph = document.createElement("p");
+  const link = document.createElement("a");
+
+  item.id = id;
+  item.appendChild(imgContainer);
+  item.appendChild(title);
+  item.appendChild(paragraph);
+  item.appendChild(link);
+  imgContainer.appendChild(image);
+
+  item.setAttribute("tabindex", "0");
+  image.setAttribute("src", avatar_url);
+  image.setAttribute("alt", `${name} profile photo.`);
+  link.setAttribute("href", html_url);
+  link.setAttribute("target", "_blank");
+
+  title.textContent = `${name !== "null" ? name : "Uninformed"}`;
+  paragraph.textContent = `${bio || `Uninformed`}`;
+  link.classList.add("secondary-btn");
+  link.textContent = `Profile`;
+
+  return item;
 };
 
 historySection.addEventListener("click", ({ target }) => {
@@ -146,18 +153,19 @@ historySection.addEventListener("click", ({ target }) => {
   userPhoto.setAttribute("src", clickedUser.avatar_url);
   userPhoto.setAttribute("alt", `${clickedUser.name} profile photo`);
 
-  title.textContent = `${clickedUser.name}`;
-  biography.textContent = `${clickedUser.bio}`;
+  title.textContent = `${clickedUser.name !== "null" ? name : "Uninformed"}`;
+  biography.textContent = `${clickedUser.bio || `Uninformed`}`;
   onGitHubSince.textContent = formatDate(clickedUser.created_at);
-  corp.textContent = `${clickedUser.company}`;
-  livesIn.textContent = `${clickedUser.location}`;
-  userFollowing.textContent = `${clickedUser.following}`;
-  userFollowers.textContent = `${clickedUser.followers}`;
-  publicRepos.textContent = `${clickedUser.public_repos}`;
-
+  corp.textContent = `${clickedUser.company || `Uninformed`}`;
+  livesIn.textContent = `${clickedUser.location || `Uninformed`}`;
+  userFollowing.textContent = `Following: ${clickedUser.following || "0"}`;
+  userFollowers.textContent = `Followers: ${
+    formatValue(clickedUser.followers) || "0"
+  }`;
+  publicRepos.textContent = `Public Repos: ${
+    formatValue(clickedUser.public_repos) || "0"
+  }`;
   seeProfile.setAttribute("href", clickedUser.html_url);
-  seeProfile.setAttribute("target", "_blank");
-  seeProfile.textContent = `${"See Profile"}`;
   backToTop();
 });
 
@@ -189,11 +197,36 @@ form.addEventListener("submit", (e) => {
   const username = form.searchBar.value;
   paths(username);
 
-  backToTop();
   form.reset();
   form.searchBar.focus();
+  backToTop();
 });
 
 const backToTop = () => {
   scrollTo(0, 0);
+};
+
+const stylesHandler = () => {
+  const presentation = document.querySelector(".user-presentation");
+  const userStats = document.querySelector(".user-stats");
+  const userHistory = document.querySelector(".users-history");
+  const main = document.querySelector(".initial-state");
+
+  main.classList.remove("initial-state");
+  presentation.classList.remove("disabled");
+  userStats.classList.remove("disabled");
+  userHistory.classList.remove("disabled");
+};
+
+const formatValue = (number) => {
+  if (number >= 100000) {
+    const value = Math.floor(number / 1000);
+    const fraction = Math.floor((number % 1000) / 100);
+    return fraction === 0 ? value + "k" : value + "." + fraction + "k";
+  }
+  if (number >= 1000) {
+    const value = Math.floor(number / 100) / 10;
+    return value + "k";
+  }
+  return number.toString();
 };
