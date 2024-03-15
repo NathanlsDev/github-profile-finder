@@ -14,12 +14,12 @@ const seeProfile = document.querySelector('[data-js="profileLink"]');
 const pastResearchProfiles = [];
 const userData = [];
 
-const paths = (username) => {
+const paths = username => {
   const endPoint = `https://api.github.com/users/${username}`;
   getGithubUserData(endPoint);
 };
 
-const fetchGitHubUser = async (endPoint) => {
+const fetchGitHubUser = async endPoint => {
   try {
     const response = await fetch(endPoint);
     if (!response.ok) {
@@ -31,7 +31,7 @@ const fetchGitHubUser = async (endPoint) => {
   }
 };
 
-const getGithubUserData = async (endPoint) => {
+const getGithubUserData = async endPoint => {
   const userData = await fetchGitHubUser(endPoint);
   renderUserDataIntoDom(
     ({
@@ -54,15 +54,15 @@ const renderUserDataIntoDom = () => {
   userPhoto.setAttribute("src", avatar_url);
   userPhoto.setAttribute("alt", `${name} profile photo`);
 
-  title.textContent = `${name !== "null" ? name : "Uninformed"}`;
+  title.textContent = `${name !== "null" ? name : `Uninformed`}`;
   biography.textContent = `${bio || `Uninformed`}`;
   onGitHubSince.textContent = formatDate(created_at);
   corp.textContent = `${company || `Uninformed`}`;
 
   livesIn.textContent = `${userLocation || `Uninformed`}`;
-  userFollowing.textContent = `Following: ${formatValue(following) || "0"}`;
-  userFollowers.textContent = `Followers: ${formatValue(followers) || "0"}`;
-  publicRepos.textContent = `Public Repos: ${public_repos || "0"}`;
+  userFollowing.textContent = `Following: ${formatValue(following)}`;
+  userFollowers.textContent = `Followers: ${formatValue(followers)}`;
+  publicRepos.textContent = `Public Repos: ${public_repos}`;
 
   seeProfile.setAttribute("href", html_url);
   seeProfile.setAttribute("target", "_blank");
@@ -127,7 +127,7 @@ createdItem = () => {
   link.setAttribute("href", html_url);
   link.setAttribute("target", "_blank");
 
-  title.textContent = `${name !== "null" ? name : "Uninformed"}`;
+  title.textContent = `${name !== "null" ? name : `Uninformed`}`;
   paragraph.textContent = `${bio || `Uninformed`}`;
   link.classList.add("secondary-btn");
   link.textContent = `Profile`;
@@ -153,23 +153,21 @@ historySection.addEventListener("click", ({ target }) => {
   userPhoto.setAttribute("src", clickedUser.avatar_url);
   userPhoto.setAttribute("alt", `${clickedUser.name} profile photo`);
 
-  title.textContent = `${clickedUser.name !== "null" ? name : "Uninformed"}`;
+  title.textContent = `${
+    clickedUser.name !== "null" ? clickedUser.name : `Uninformed`
+  }`;
   biography.textContent = `${clickedUser.bio || `Uninformed`}`;
   onGitHubSince.textContent = formatDate(clickedUser.created_at);
   corp.textContent = `${clickedUser.company || `Uninformed`}`;
   livesIn.textContent = `${clickedUser.location || `Uninformed`}`;
-  userFollowing.textContent = `Following: ${clickedUser.following || "0"}`;
-  userFollowers.textContent = `Followers: ${
-    formatValue(clickedUser.followers) || "0"
-  }`;
-  publicRepos.textContent = `Public Repos: ${
-    formatValue(clickedUser.public_repos) || "0"
-  }`;
+  userFollowing.textContent = `Following: ${clickedUser.following}`;
+  userFollowers.textContent = `Followers: ${formatValue(clickedUser.followers)}`;
+  publicRepos.textContent = `Public Repos: ${formatValue(clickedUser.public_repos)}`;
   seeProfile.setAttribute("href", clickedUser.html_url);
   backToTop();
 });
 
-const dataHolder = (data) => {
+const dataHolder = data => {
   const userData = JSON.parse(localStorage.getItem("userData")) || [];
 
   if (userData.length < 5) {
@@ -182,7 +180,7 @@ const dataHolder = (data) => {
   localStorage.setItem("userData", JSON.stringify(userData));
 };
 
-const formatDate = (date) => {
+const formatDate = date => {
   const createdAt = new Date(date);
   return createdAt.toLocaleDateString("pt-BR", {
     day: "2-digit",
@@ -191,8 +189,8 @@ const formatDate = (date) => {
   });
 };
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+form.addEventListener("submit", event => {
+  event.preventDefault();
 
   const username = form.searchBar.value;
   paths(username);
@@ -218,7 +216,7 @@ const stylesHandler = () => {
   userHistory.classList.remove("disabled");
 };
 
-const formatValue = (number) => {
+const formatValue = number => {
   if (number >= 100000) {
     const value = Math.floor(number / 1000);
     const fraction = Math.floor((number % 1000) / 100);
